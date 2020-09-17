@@ -36,3 +36,10 @@ const result = {
   list: students
 };
 console.log('result', result);
+
+
+// Задание выполнено верно, но на самом деле его можно выполнить в одну строчку, т.к. в Javascript есть встроенный JSON-parser :)
+
+let jsonObj = JSON.parse(jsonString);
+
+// На выходе (в переменной jsonObj) получается готовый Javascript-объект, если конечно в jsonString передан валидный JSON

@@ -32,16 +32,16 @@ const list = [];
 
 const listNode = xmlDOM.querySelector("list");
 
-for (i = 0; i < 2; i++) {
-  let studentNode = listNode.getElementsByTagName("student")[i];
+const studentNodes = listNode.querySelectorAll("student");
 
+studentNodes.forEach(studentNode => {
   list.push({
     name: `${studentNode.querySelector("name").querySelector("first").textContent} ${studentNode.querySelector("name").querySelector("second").textContent}`,
     age: Number(studentNode.querySelector("age").textContent),
     prof: studentNode.querySelector("prof").textContent,
     lang: studentNode.querySelector("name").getAttribute('lang')
   });
-}
+})
 
 /* 3. Запись данных в объект */
 
@@ -51,3 +51,8 @@ const result = {
 console.log('result', result);
 
 // Пока не разобралась, как определить число узлов с заданным именем для использования в цикле.
+
+/* ---- */
+
+// Если вы не знаете точное количество узлов, можно и нужно использовать querySelectorAll - этот метод найдет все узлы по селектору, а не только первое совпадение, как у querySelector. querySelectorAll возвращает коллекцию найденных элементов, которую можно перебрать циклом, как обычный массив.
+// Выше в коде показала, как правильно это сделать

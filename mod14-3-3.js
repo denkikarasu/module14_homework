@@ -21,10 +21,33 @@
     xhr.send();
   }
   
-  // Получение нужных узлов
-  const resultNode = document.querySelector('.j-result');
-  const btnNode = document.querySelector('.j-btn-request');
+  // Переменные для нужных нод
+  let resultNode;
+  let btnNode;
+
+    // Функция для получения нужных узлов
+    window.onload = function() {
+      resultNode = document.querySelector('.j-result');
+      btnNode = document.querySelector('.j-btn-request');
+      
+      // обработчик на кнопку для запроса
+      btnNode.addEventListener('click', () => {
+        const inputNumber = Number(document.querySelector('.j-input-number').value);
+        // проверка на нецелое число добавлена из общих соображений
+        // допустимо также использовать input type="text", проверка с помощью isInteger отфильтрует и введенные нечисловые значения
+        //console.log(inputNumber);
+        if(!Number.isInteger(inputNumber)) {
+          displayErrorMsg("Это не целое число!");
+        } else if (inputNumber<1 || inputNumber>10) {
+          displayErrorMsg("Число вне диапазона от 1 до 10");
+        } else {
+          useRequest(`https://picsum.photos/v2/list/?limit=${inputNumber}`, displayResult);
+        }
+      
+      });
+    };
   
+
   
   // aункция обработки полученного результата    
   function displayResult(apiData) {
@@ -51,24 +74,13 @@
     resultNode.innerHTML = display;
   }
   
-  // обработчик на кнопку для запроса
-  btnNode.addEventListener('click', () => {
-    const inputNumber = Number(document.querySelector('.j-input-number').value);
-    // проверка на нецелое число добавлена из общих соображений
-    // можно также использовать input type="text", проверка с помощью isInteger отфильтрует в том числе и введенные нечисловые значения
-    if(!Number.isInteger(inputNumber)) {
-      displayErrorMsg("Это не целое число!");
-    } else if (inputNumber<1 || inputNumber>10) {
-      displayErrorMsg("Число вне диапазона от 1 до 10");
-    } else {
-      useRequest(`https://picsum.photos/v2/list/?limit=${inputNumber}`, displayResult);
-    }
-  
-  });
-
-  // При попытке запуска в текущем виде через браузер получаю ошибку: 
+  // (РЕШЕНО) При попытке запуска в текущем виде через браузер получаю ошибку: 
   // TypeError: Cannot read property 'addEventListener' of null
   // В codepen тот же код (без <head> в html) работает без проблем:
   // https://codepen.io/denkikarasu/pen/qBZKOMe
 
-  // вариант решения путем переноса скрипта в конец тега <body> (где он запускается в codepen согласно https://blog.codepen.io/documentation/preview-template/)
+  // (ПРОМЕЖУТОЧНЫЙ ВАРИАНТ) вариант решения путем переноса скрипта в конец тега <body> (где он запускается в codepen согласно https://blog.codepen.io/documentation/preview-template/).
+
+  //  Проблема объясняется тем, что скрипт загружается раньше, чем html, поэтому решена оборачиванием кода в функцию window.onload.
+
+  // Правда, при включенном дебаггере при перезагрузке страницы получаю ошибку: https://prnt.sc/uinz28. В этом разобраться уже не могу. При отключении дебаггера или закрытых инструментах разработчика работает.

@@ -1,8 +1,6 @@
-  // нода для вставки результата запроса
-  const resultNode = document.querySelector('.j-result');
-  // кнопка для отправки запроса
-  const btnNode = document.querySelector('.j-btn-request');
-
+  // переменные для нужных нод
+  let resultNode;
+  let btnNode;
 
   // Функция для вывода изображений
 function displayResult(apiData) {
@@ -29,6 +27,12 @@ function displayResult(apiData) {
     const display = `<p>${message}</p>`;
     resultNode.innerHTML = display;
   }
+
+window.onload = function () {
+  resultNode = document.querySelector('.j-result');
+  // кнопка для отправки запроса
+  btnNode = document.querySelector('.j-btn-request');
+ 
   
   // обработчик на кнопку для запроса
   btnNode.addEventListener('click', () => {
@@ -59,7 +63,7 @@ function displayResult(apiData) {
       const dataString = JSON.stringify(data);
       localStorage.setItem('myImages', dataString);
     })
-    .catch(() => { console.log('error') });
+    .catch(() => { console.log('error'); });
     }
   
   });
@@ -68,6 +72,10 @@ function displayResult(apiData) {
   const dataJSON = JSON.parse(localStorage.getItem('myImages'));
   // console.log('dataJSON', dataJSON);
   displayResult(dataJSON);
+};
 
   // В codepen:
   // https://codepen.io/denkikarasu/pen/VwaBwJY
+
+  // Доработано аналогично mod14-3-3.js. 
+  // При перезагрузке страницы дебаггер отлавливает ту же ошибку, при закрытых devtools сбоев нет.

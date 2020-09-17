@@ -40,7 +40,7 @@ for (i = 0; i < 2; i++) {
     age: Number(studentNode.querySelector("age").textContent),
     prof: studentNode.querySelector("prof").textContent,
     lang: studentNode.querySelector("name").getAttribute('lang')
-  })
+  });
 }
 
 /* 3. Запись данных в объект */

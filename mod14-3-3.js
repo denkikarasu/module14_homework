@@ -1,7 +1,5 @@
-/**
-  * Функция-обертка над XMLHttpRequest
-  */
- function useRequest(url, callback) {
+// Функция-обертка над XMLHttpRequest
+  function useRequest(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     
@@ -23,18 +21,15 @@
     xhr.send();
   }
   
-  // нода для вставки результата запроса
+  // Получение нужных узлов
   const resultNode = document.querySelector('.j-result');
-  // кнопка для отправки запроса
   const btnNode = document.querySelector('.j-btn-request');
   
-  /**
-    * Функция обработки полученного результата
-    */
+  
+  // aункция обработки полученного результата    
   function displayResult(apiData) {
     let cards = '';
-    // console.log('start cards', cards);
-    
+ 
     apiData.forEach(item => {
       const cardBlock = `
         <div class="card">
@@ -60,8 +55,7 @@
   btnNode.addEventListener('click', () => {
     const inputNumber = Number(document.querySelector('.j-input-number').value);
     // проверка на нецелое число добавлена из общих соображений
-    // допустимо также использовать input type="text", проверка с помощью isInteger отфильтрует и введенные нечисловые значения
-    //console.log(inputNumber);
+    // можно также использовать input type="text", проверка с помощью isInteger отфильтрует в том числе и введенные нечисловые значения
     if(!Number.isInteger(inputNumber)) {
       displayErrorMsg("Это не целое число!");
     } else if (inputNumber<1 || inputNumber>10) {
@@ -76,3 +70,5 @@
   // TypeError: Cannot read property 'addEventListener' of null
   // В codepen тот же код (без <head> в html) работает без проблем:
   // https://codepen.io/denkikarasu/pen/qBZKOMe
+
+  // вариант решения путем переноса скрипта в конец тега <body> (где он запускается в codepen согласно https://blog.codepen.io/documentation/preview-template/)
